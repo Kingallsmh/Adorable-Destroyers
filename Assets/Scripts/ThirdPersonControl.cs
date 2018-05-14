@@ -7,9 +7,12 @@ public class ThirdPersonControl : MonoBehaviour {
 
 	Rigidbody rb;
 	public float speed;
+	Transform trans;
 
 	// Use this for initialization
 	void Start () {
+		GameObject obj = new GameObject();
+		trans = obj.transform;
 		rb = GetComponent<Rigidbody>();
 	}
 	
@@ -26,16 +29,16 @@ public class ThirdPersonControl : MonoBehaviour {
     }
 
 	void Movement(){
-		Transform trans = Camera.main.transform;
+		trans.position = Camera.main.transform.position;
+		trans.rotation = Camera.main.transform.rotation;
 		trans.eulerAngles = new Vector3(0, trans.rotation.eulerAngles.y, 0);
-		//input.y = rb.velocity.y;
 		//Jump();
 		//if (input.y > -maxVelChange)
 		//{
 		//    input.y += currentGravity;
 		//}
 		Vector3 input = GetDirectionInput();
-
+		input.y = rb.velocity.y;
         rb.velocity = trans.transform.TransformDirection(input);
         //input.y = 0;
         if (input != Vector3.zero)

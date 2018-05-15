@@ -5,15 +5,18 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class ThirdPersonControl : MonoBehaviour {
 
+	Animator anim;
 	Rigidbody rb;
 	public float speed;
 	Transform trans;
+
 
 	// Use this for initialization
 	void Start () {
 		GameObject obj = new GameObject();
 		trans = obj.transform;
 		rb = GetComponent<Rigidbody>();
+		anim = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -49,7 +52,7 @@ public class ThirdPersonControl : MonoBehaviour {
             FaceTowardsDirection(tempVel);
         }
 
-        //anim.SetBool("Moving", input.magnitude > 0.1);
+        anim.SetBool("Moving", input.magnitude > 0.2f);
         //isGrounded = false;
 	}
 

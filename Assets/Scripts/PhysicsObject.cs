@@ -79,7 +79,7 @@ public class PhysicsObject : MonoBehaviour
 
 	void Movement2(Vector3 move, bool yMovement){
 		Rigidbody rb;
-		int count = Physics.BoxCastNonAlloc(rb.position, rb.)
+		//int count = Physics.BoxCastNonAlloc(rb.position, rb.)
 	}
 
     protected void Movement(Vector2 move, bool yMovement)
@@ -100,7 +100,7 @@ public class PhysicsObject : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 PlatformEffector2D platform = hitBuffer[i].collider.GetComponent<PlatformEffector2D>();
-                PlatformAddition platformAddition = hitBuffer[i].collider.GetComponent<PlatformAddition>();
+                //PlatformAddition platformAddition = hitBuffer[i].collider.GetComponent<PlatformAddition>();
                 if (!platform)
                 {
                     hitBufferList.Add(hitBuffer[i]); // get the colliding objects
@@ -116,14 +116,14 @@ public class PhysicsObject : MonoBehaviour
                         }
                     }
                 }
-                if (platformAddition)
-                {
-                    if (platformAddition.MoveWithPlatform)
-                    {
-                        //Debug.Log("Platform Move: " + platformAddition.rb2d.velocity);
-                        rb2d.velocity += hitBuffer[i].collider.GetComponent<PlatformAddition>().rb2d.velocity;
-                    }
-                }
+                //if (platformAddition)
+                //{
+                //    if (platformAddition.MoveWithPlatform)
+                //    {
+                //        //Debug.Log("Platform Move: " + platformAddition.rb2d.velocity);
+                //        rb2d.velocity += hitBuffer[i].collider.GetComponent<PlatformAddition>().rb2d.velocity;
+                //    }
+                //}
             }
 
             for (int i = 0; i < hitBufferList.Count; i++)

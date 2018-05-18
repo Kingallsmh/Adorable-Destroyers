@@ -17,6 +17,11 @@ public class ThirdPersonControl : MonoBehaviour {
 	public float pickupThrowDelay = 0.2f;
 	GameObject heldObject;
 
+	//Stats for Character
+	[Header("Stats")]
+	public float hp = 10;
+	public float strength = 1;
+
 
 	// Use this for initialization
 	void Start () {
@@ -40,10 +45,10 @@ public class ThirdPersonControl : MonoBehaviour {
 			if (Input.GetKeyDown(KeyCode.Z))
 			{
 				if(!heldObject){
-					yield return StartCoroutine(PickupObject(myCol));
+					yield return StartCoroutine(PickupObject(new Vector3(2, 1, 2)));
 				}
 				else{
-					yield return StartCoroutine(ThrowObject());
+					yield return StartCoroutine(ThrowObject2());
 				}
 			}
 			yield return null;
@@ -100,14 +105,18 @@ public class ThirdPersonControl : MonoBehaviour {
         }
     }
 
-	IEnumerator PickupObject(Collider col){
+	IEnumerator PickupObject(Vector3 boxSize){
 		RaycastHit hit;
-		if(Physics.BoxCast(col.transform.position, col.bounds.extents, transform.forward, out hit, transform.rotation, 1)){
-			hit.transform.parent = transform;
-			hit.transform.GetComponent<Rigidbody>().useGravity = false;
-			hit.transform.GetComponent<Rigidbody>().isKinematic = true;
-			heldObject = hit.transform.gameObject;
-			yield return new WaitForSeconds(pickupThrowDelay);
+		ExtDebug.DrawBoxCastBox(transform.position + (transform.forward), boxSize, transform.rotation, transform.forward, 1, Color.blue);
+		if(Physics.BoxCast(transform.position, boxSize, transform.forward, out hit, transform.rotation, 1)){
+			
+			if(hit.rigidbody.mass <= strength){
+                hit.transform.parent = transform;
+                hit.transform.GetComponent<Rigidbody>().useGravity = false;
+                hit.transform.GetComponent<Rigidbody>().isKinematic = true;
+                heldObject = hit.transform.gameObject;
+                yield return new WaitForSeconds(pickupThrowDelay);
+            } 
 		}
 	}
 
@@ -121,4 +130,17 @@ public class ThirdPersonControl : MonoBehaviour {
 			yield return new WaitForSeconds(pickupThrowDelay);
 		}
 	}
+
+	IEnumerator ThrowObject2()
+    {
+        if (heldObject)
+        {
+            heldObject.GetComponent<Rigidbody>().useGravity = true;
+            heldObject.GetComponent<Rigidbody>().isKinematic = false;
+            heldObject.GetComponent<Rigidbody>().velocity = (transform.forward * throwSpeed);
+            heldObject.transform.parent = null;
+            heldObject = null;
+            yield return new WaitForSeconds(pickupThrowDelay);
+        }
+    }
 }

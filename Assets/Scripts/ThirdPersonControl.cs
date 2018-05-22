@@ -11,16 +11,14 @@ public class ThirdPersonControl : MonoBehaviour {
 	public float jumpSpeed;
 	Transform trans;
 
-    //For grabbing and throwing
-	public Collider myCol;
-	public float throwSpeed;
-	public float pickupThrowDelay = 0.2f;
-	GameObject heldObject;
+	//For grabbing and throwing
+	public GrabbingMechanic grabbing;
+	public float throwingSpeed = 10;
 
 	//Stats for Character
 	[Header("Stats")]
 	public float hp = 10;
-	public float strength = 1;
+	public int strength = 1;
 
 
 	// Use this for initialization
@@ -44,11 +42,11 @@ public class ThirdPersonControl : MonoBehaviour {
 			Movement();
 			if (Input.GetKeyDown(KeyCode.Z))
 			{
-				if(!heldObject){
-					yield return StartCoroutine(PickupObject(new Vector3(2, 1, 2)));
+				if(!grabbing.heldObject){
+					yield return StartCoroutine(grabbing.PickupObject(strength));
 				}
 				else{
-					yield return StartCoroutine(ThrowObject2());
+					yield return StartCoroutine(grabbing.ThrowObject(throwingSpeed));
 				}
 			}
 			yield return null;
@@ -100,47 +98,47 @@ public class ThirdPersonControl : MonoBehaviour {
         {
             if (Quaternion.Angle(transform.rotation, Quaternion.LookRotation(rb.velocity.normalized)) > 0.01)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction.normalized), 0.2f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction.normalized), 0.1f);
             }
         }
     }
 
-	IEnumerator PickupObject(Vector3 boxSize){
-		RaycastHit hit;
-		ExtDebug.DrawBoxCastBox(transform.position + (transform.forward), boxSize, transform.rotation, transform.forward, 1, Color.blue);
-		if(Physics.BoxCast(transform.position, boxSize, transform.forward, out hit, transform.rotation, 1)){
+	//IEnumerator PickupObject(Vector3 boxSize){
+	//	RaycastHit hit;
+	//	ExtDebug.DrawBoxCastBox(transform.position, boxSize, transform.rotation, transform.forward, 1, Color.blue);
+	//	if(Physics.BoxCast(transform.position, boxSize, transform.forward, out hit, transform.rotation, 1)){
 			
-			if(hit.rigidbody.mass <= strength){
-                hit.transform.parent = transform;
-                hit.transform.GetComponent<Rigidbody>().useGravity = false;
-                hit.transform.GetComponent<Rigidbody>().isKinematic = true;
-                heldObject = hit.transform.gameObject;
-                yield return new WaitForSeconds(pickupThrowDelay);
-            } 
-		}
-	}
+	//		if(hit.rigidbody.mass <= strength){
+ //               hit.transform.parent = transform;
+ //               hit.transform.GetComponent<Rigidbody>().useGravity = false;
+ //               hit.transform.GetComponent<Rigidbody>().isKinematic = true;
+ //               heldObject = hit.transform.gameObject;
+ //               yield return new WaitForSeconds(pickupThrowDelay);
+ //           } 
+	//	}
+	//}
 
-	IEnumerator ThrowObject(){
-		if(heldObject){
-			heldObject.GetComponent<Rigidbody>().useGravity = true;
-			heldObject.GetComponent<Rigidbody>().isKinematic = false;
-			heldObject.GetComponent<Rigidbody>().AddForce(transform.forward * throwSpeed);
-			heldObject.transform.parent = null;
-			heldObject = null;
-			yield return new WaitForSeconds(pickupThrowDelay);
-		}
-	}
+	//IEnumerator ThrowObject(){
+	//	if(heldObject){
+	//		heldObject.GetComponent<Rigidbody>().useGravity = true;
+	//		heldObject.GetComponent<Rigidbody>().isKinematic = false;
+	//		heldObject.GetComponent<Rigidbody>().AddForce(transform.forward * throwSpeed);
+	//		heldObject.transform.parent = null;
+	//		heldObject = null;
+	//		yield return new WaitForSeconds(pickupThrowDelay);
+	//	}
+	//}
 
-	IEnumerator ThrowObject2()
-    {
-        if (heldObject)
-        {
-            heldObject.GetComponent<Rigidbody>().useGravity = true;
-            heldObject.GetComponent<Rigidbody>().isKinematic = false;
-            heldObject.GetComponent<Rigidbody>().velocity = (transform.forward * throwSpeed);
-            heldObject.transform.parent = null;
-            heldObject = null;
-            yield return new WaitForSeconds(pickupThrowDelay);
-        }
-    }
+	//IEnumerator ThrowObject2()
+    //{
+    //    if (heldObject)
+    //    {
+    //        heldObject.GetComponent<Rigidbody>().useGravity = true;
+    //        heldObject.GetComponent<Rigidbody>().isKinematic = false;
+    //        heldObject.GetComponent<Rigidbody>().velocity = (transform.forward * throwSpeed);
+    //        heldObject.transform.parent = null;
+    //        heldObject = null;
+    //        yield return new WaitForSeconds(pickupThrowDelay);
+    //    }
+    //}
 }

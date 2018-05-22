@@ -313,7 +313,7 @@ Prefab:
     - target: {fileID: 114569842223341256, guid: ad876c759ea114cf986128742b61e2df,
         type: 2}
       propertyPath: jumpSpeed
-      value: 10
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 114569842223341256, guid: ad876c759ea114cf986128742b61e2df,
         type: 2}
@@ -356,6 +356,16 @@ Prefab:
         type: 2}
       propertyPath: throwSpeed
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114569842223341256, guid: ad876c759ea114cf986128742b61e2df,
+        type: 2}
+      propertyPath: grabbing
+      value: 
+      objectReference: {fileID: 1754222293}
+    - target: {fileID: 114569842223341256, guid: ad876c759ea114cf986128742b61e2df,
+        type: 2}
+      propertyPath: strength
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ad876c759ea114cf986128742b61e2df, type: 2}
@@ -611,8 +621,8 @@ Rigidbody:
   m_GameObject: {fileID: 532255136}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Drag: 1
+  m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1259,7 +1269,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1603585412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.78, y: 2, z: 0}
+  m_LocalPosition: {x: -6.78, y: 3.04, z: 0}
   m_LocalScale: {x: 2, y: 4, z: 2}
   m_Children: []
   m_Father: {fileID: 650647098}
@@ -1429,6 +1439,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1754222292}
   - component: {fileID: 1754222291}
+  - component: {fileID: 1754222293}
   m_Layer: 0
   m_Name: GrabBox
   m_TagString: Untagged
@@ -1461,3 +1472,16 @@ Transform:
   m_Father: {fileID: 815681783}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1754222293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1754222290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddb6c0959e450464cb385fadee56bb2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldObject: {fileID: 0}
+  pickupThrowDelay: 0.2

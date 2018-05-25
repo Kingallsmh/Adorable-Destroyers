@@ -93,7 +93,7 @@ public class ThirdPersonControl : MonoBehaviour {
 
 	void FaceTowardsDirection(Vector3 direction)
     {
-        //If rotation in minute in difference, don't bother rotating
+        //If rotation is minute in difference, don't bother rotating
         if (direction != Vector3.zero)
         {
             if (Quaternion.Angle(transform.rotation, Quaternion.LookRotation(rb.velocity.normalized)) > 0.01)
@@ -102,43 +102,4 @@ public class ThirdPersonControl : MonoBehaviour {
             }
         }
     }
-
-	//IEnumerator PickupObject(Vector3 boxSize){
-	//	RaycastHit hit;
-	//	ExtDebug.DrawBoxCastBox(transform.position, boxSize, transform.rotation, transform.forward, 1, Color.blue);
-	//	if(Physics.BoxCast(transform.position, boxSize, transform.forward, out hit, transform.rotation, 1)){
-			
-	//		if(hit.rigidbody.mass <= strength){
- //               hit.transform.parent = transform;
- //               hit.transform.GetComponent<Rigidbody>().useGravity = false;
- //               hit.transform.GetComponent<Rigidbody>().isKinematic = true;
- //               heldObject = hit.transform.gameObject;
- //               yield return new WaitForSeconds(pickupThrowDelay);
- //           } 
-	//	}
-	//}
-
-	//IEnumerator ThrowObject(){
-	//	if(heldObject){
-	//		heldObject.GetComponent<Rigidbody>().useGravity = true;
-	//		heldObject.GetComponent<Rigidbody>().isKinematic = false;
-	//		heldObject.GetComponent<Rigidbody>().AddForce(transform.forward * throwSpeed);
-	//		heldObject.transform.parent = null;
-	//		heldObject = null;
-	//		yield return new WaitForSeconds(pickupThrowDelay);
-	//	}
-	//}
-
-	//IEnumerator ThrowObject2()
-    //{
-    //    if (heldObject)
-    //    {
-    //        heldObject.GetComponent<Rigidbody>().useGravity = true;
-    //        heldObject.GetComponent<Rigidbody>().isKinematic = false;
-    //        heldObject.GetComponent<Rigidbody>().velocity = (transform.forward * throwSpeed);
-    //        heldObject.transform.parent = null;
-    //        heldObject = null;
-    //        yield return new WaitForSeconds(pickupThrowDelay);
-    //    }
-    //}
 }

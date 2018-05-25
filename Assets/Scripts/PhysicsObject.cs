@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PhysicsObject : MonoBehaviour
 {
-
     public float minGroundNormalY = .65f;
     public float gravityModifier = 1f;
     public float maxVerticalSpeed = 10;
@@ -22,6 +21,11 @@ public class PhysicsObject : MonoBehaviour
 
     protected const float minMoveDistance = 0.001f;
     protected const float shellRadius = 0.01f;
+
+	//Test zone
+	public Collider mainCol;
+	RaycastHit[] hitBuffer3D = new RaycastHit[16];
+	List<RaycastHit> hitBuffer3DList = new List<RaycastHit>(16);
 
     void OnEnable()
     {
@@ -78,8 +82,19 @@ public class PhysicsObject : MonoBehaviour
     }
 
 	void Movement2(Vector3 move, bool yMovement){
-		Rigidbody rb;
-		//int count = Physics.BoxCastNonAlloc(rb.position, rb.)
+		int count = Physics.BoxCastNonAlloc(mainCol.transform.position, mainCol.bounds.extents, move, hitBuffer3D);
+		for (int i = 0; i < count; i++){
+			if ((velocity.y < 0 && yMovement))
+            {
+                if (hitBuffer3D[i].normal.y > 0)
+                {
+					if (mainCol.bounds.Intersects(hitBuffer3D[i].collider.bounds))
+                    {
+                        hitBuffer3DList.Add(hitBuffer3D[i]);
+                    }
+                }
+            }
+		}
 	}
 
     protected void Movement(Vector2 move, bool yMovement)
